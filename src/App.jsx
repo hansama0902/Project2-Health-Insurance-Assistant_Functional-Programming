@@ -1,35 +1,37 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
-import './App.css'
+import React, { useState } from "react";
+import "./App.css";
+import "bootstrap/dist/css/bootstrap.min.css";
+import Navbar from "./components/Navbar";
+import UserInputForm from "./components/UserInputForm";
+import InsuranceQuoteFetcher from "./components/InsuranceQuoteFetcher";
+import AddInsuranceModal from "./components/AddInsuranceModal";
 
-function App() {
-  const [count, setCount] = useState(0)
+const App = () => {
+  const [filters, setFilters] = useState(null);
+  const [showAddModal, setShowAddModal] = useState(false);
 
   return (
     <>
-      <div>
-        <a href="https://vite.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
-      </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.jsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
-    </>
-  )
-}
+      <Navbar onAddInsurance={() => setShowAddModal(true)} />
 
-export default App
+      <div className="container text-center">
+        <h1 className="my-4 text-light">Health Insurance Assistant</h1>
+        <div className="card text-light p-4 shadow-lg">
+          <UserInputForm onSearch={setFilters} />
+        </div>
+        {filters && (
+          <div className="mt-4">
+            <InsuranceQuoteFetcher filters={filters} />
+          </div>
+        )}
+      </div>
+
+      <AddInsuranceModal show={showAddModal} handleClose={() => setShowAddModal(false)} />
+    </>
+  );
+};
+
+export default App;
+
+
+
