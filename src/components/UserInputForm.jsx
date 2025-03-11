@@ -49,7 +49,8 @@ const UserInputForm = ({ onSearch }) => {
       <div className="mb-3 w-75">
         <label className="form-label">Insurance Tier:</label>
         <select className="form-select" value={tier} onChange={(e) => setTier(e.target.value)}>
-        <option value="">-- Select Tier --</option> {/* empty */}
+        <option value="">-- Select Tier --</option> 
+        <option value="All Options">All Options</option>
           <option value="Silver">Silver</option>
           <option value="Bronze">Bronze</option>
         </select>
