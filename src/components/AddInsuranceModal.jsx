@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useCallback } from "react";
-import { db } from "../firebaseConfig";
+import { db } from "../../db/firebaseConfig";
 import { collection, addDoc } from "firebase/firestore";
 
 
@@ -15,7 +15,7 @@ const AddInsuranceModal = ({ show, handleClose }) => {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
 
-  // ✅ 当模态框打开时，清空表单
+
   useEffect(() => {
     if (show) {
       setInsuranceData({
@@ -29,12 +29,11 @@ const AddInsuranceModal = ({ show, handleClose }) => {
     }
   }, [show]);
 
-  // ✅ 使用 `useCallback` 优化 `handleChange`
+
   const handleChange = useCallback((e) => {
     setInsuranceData((prev) => ({ ...prev, [e.target.name]: e.target.value }));
   }, []);
 
-  // ✅ 处理提交
   const handleSubmit = async () => {
     setError("");
     if (!insuranceData.insurer || !insuranceData.tier || !insuranceData.base_premium || !insuranceData.coverage_deductible || !insuranceData.hospital_coverage) {

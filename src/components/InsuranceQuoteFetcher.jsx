@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import { collection, getDocs } from "firebase/firestore";
-import { db } from "../firebaseConfig";
+import { db } from "../../db/firebaseConfig";
 import InsuranceQuoteTable from "./InsuranceQuoteTable";
 
 const InsuranceQuoteFetcher = ({ filters, onSelectPlan, selectedPlans }) => {
