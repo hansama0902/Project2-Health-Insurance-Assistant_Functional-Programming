@@ -41,6 +41,7 @@ html, body {
   background-color: #fff; 
   color: #000 
 }
-.medi-cal {  
+.table-dark .medi-cal {  
+  color: #ad0505;
   font-weight: bold;
 }

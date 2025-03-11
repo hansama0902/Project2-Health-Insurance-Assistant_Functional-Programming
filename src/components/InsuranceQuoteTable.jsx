@@ -26,10 +26,8 @@ const InsuranceQuoteTable = ({ plans, userIncome, userAge, onSelectPlan, selecte
               : PremiumCalculator({ plan, userIncome, userAge });
 
             const isSelected = selectedPlans.some((p) => p.id === plan.id);
-            const rowClass = plan.special ? "medi-cal" : "";
-
             return (
-              <tr key={plan.id} className={`${isSelected ? "table-success" : ""} ${rowClass}`}>
+              <tr key={plan.id} className={isSelected ? "table-success" : ""}>
                 <td>
                   {!plan.special && (
                     <input
@@ -44,13 +42,13 @@ const InsuranceQuoteTable = ({ plans, userIncome, userAge, onSelectPlan, selecte
                     />
                   )}
                 </td>
-                <td>{plan.insurer}</td>
-                <td>{plan.tier}</td>
-                <td>${basePremium.toFixed(2)}</td>
-                <td>${discount.toFixed(2)}</td>
-                <td><strong>${finalPremium.toFixed(2)}</strong></td>
-                <td>${plan.coverage_deductible}</td>
-                <td>{plan.hospital_coverage}</td>
+                <td className={plan.special ? "medi-cal" : ""}>{plan.insurer}</td>
+                <td className={plan.special ? "medi-cal" : ""}>{plan.tier}</td>
+                <td className={plan.special ? "medi-cal" : ""}>${basePremium.toFixed(2)}</td>
+                <td className={plan.special ? "medi-cal" : ""}>${discount.toFixed(2)}</td>
+                <td className={plan.special ? "medi-cal" : ""}><strong>${finalPremium.toFixed(2)}</strong></td>
+                <td className={plan.special ? "medi-cal" : ""}>${plan.coverage_deductible}</td>
+                <td className={plan.special ? "medi-cal" : ""}>{plan.hospital_coverage}</td>
               </tr>
             );
           })}
