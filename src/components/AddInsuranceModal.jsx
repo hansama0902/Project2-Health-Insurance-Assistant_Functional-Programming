@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useCallback } from "react";
 import { db } from "../../db/firebaseConfig";
 import { collection, addDoc } from "firebase/firestore";
+import "../stylesheets/addInsuranceModal.css"; 
 
 
 const AddInsuranceModal = ({ show, handleClose }) => {

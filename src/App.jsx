@@ -1,64 +1,39 @@
 import React, { useState } from "react";
-import "./App.css";
 import "bootstrap/dist/css/bootstrap.min.css";
 import Navbar from "./components/Navbar";
-import UserInputForm from "./components/UserInputForm";
-import InsuranceQuoteFetcher from "./components/InsuranceQuoteFetcher";
+import HealthInsuranceSection from "./components/HealthInsuranceSection";
 import AddInsuranceModal from "./components/AddInsuranceModal";
-import InsuranceComparison from "./components/InsuranceComparison";
+import useInsuranceManager from "./hooks/useInsuranceManager";
+import useCompareMode from "./hooks/useCompareMode";
 
 const App = () => {
   const [filters, setFilters] = useState(null);
   const [showAddModal, setShowAddModal] = useState(false);
-  const [compareMode, setCompareMode] = useState(false);
-  const [selectedPlans, setSelectedPlans] = useState([]);
 
-  const handleSelectPlan = (plan) => {
-    setSelectedPlans((prev) => {
-      if (prev.some((p) => p.id === plan.id)) {
-        return prev.filter((p) => p.id !== plan.id);
-      } else if (prev.length < 2) {
-        return [...prev, plan];
-      } else {
-        return prev;
-      }
-    });
-  };
-
-  const handleCompareModeChange = (plans) => {
-    setSelectedPlans(plans);
-    setCompareMode(true);
-  };
+  // ✅ 保险计划管理 Hook
+  const { selectedPlans, handleSelectPlan, handleDeletePlan, handleEditPlan } = useInsuranceManager();
+  
+  // ✅ 保险对比模式 Hook
+  const { compareMode, enableCompareMode } = useCompareMode();
 
   return (
     <>
       <Navbar 
         onAddInsurance={() => setShowAddModal(true)} 
-        onCompareModeChange={handleCompareModeChange}
+        onCompareModeChange={enableCompareMode}
         selectedPlans={selectedPlans}
       />
 
-      <div className="container text-center">
-        <h1 className="my-4 text-light">Health Insurance Assistant</h1>
-
-        <div className="card text-light p-4 shadow-lg">
-          <UserInputForm onSearch={setFilters} />
-        </div>
-
-        <div className="mt-4">
-          {compareMode ? (
-            <InsuranceComparison selectedPlans={selectedPlans} />
-          ) : (
-            filters && (
-              <InsuranceQuoteFetcher 
-                filters={filters} 
-                onSelectPlan={handleSelectPlan} 
-                selectedPlans={selectedPlans} 
-              />
-            )
-          )}
-        </div>
-      </div>
+      {/* ✅ 健康保险相关部分 */}
+      <HealthInsuranceSection 
+        filters={filters}
+        setFilters={setFilters}
+        compareMode={compareMode}
+        selectedPlans={selectedPlans}
+        onSelectPlan={handleSelectPlan}
+        onDeletePlan={handleDeletePlan}
+        onEditPlan={handleEditPlan}
+      />
 
       <AddInsuranceModal show={showAddModal} handleClose={() => setShowAddModal(false)} />
     </>
@@ -66,6 +41,8 @@ const App = () => {
 };
 
 export default App;
+
+
 
 
 

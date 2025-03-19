@@ -1,4 +1,5 @@
 import { useState } from "react";
+import "../stylesheets/userInputForm.css"; 
 const UserInputForm = ({ onSearch }) => {
   const [age, setAge] = useState("");
   const [income, setIncome] = useState("");

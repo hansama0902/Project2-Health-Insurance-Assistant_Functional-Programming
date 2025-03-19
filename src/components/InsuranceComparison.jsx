@@ -47,6 +47,9 @@ const InsuranceComparison = ({ selectedPlans }) => {
           </tbody>
         </table>
       </div>
+      <button className="btn btn-danger mb-3" onClick={() => window.location.reload()}>
+        Exit Comparison
+      </button>
     </div>
   );
 };
