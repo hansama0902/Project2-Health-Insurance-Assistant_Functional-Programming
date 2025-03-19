@@ -1,6 +1,6 @@
 const premiumCalculator = ({ plan, userIncome, userAge }) => {
     let discount = 0;
-    let basePremium = Number(plan.base_premium) || 0; // 确保 base_premium 为数值
+    let basePremium = Number(plan.base_premium) || 0; 
     let originalPremium = basePremium;
   
     if (userAge > 35 && userAge <= 55) {

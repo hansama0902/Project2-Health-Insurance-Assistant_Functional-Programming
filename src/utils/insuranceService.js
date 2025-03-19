@@ -1,7 +1,6 @@
 import { db } from "../../db/firebaseConfig";
 import { collection, getDocs, doc, updateDoc, deleteDoc } from "firebase/firestore";
 
-// 获取保险计划数据
 export const fetchInsurancePlans = async () => {
   try {
     const querySnapshot = await getDocs(collection(db, "insurance_corp"));
@@ -9,17 +8,14 @@ export const fetchInsurancePlans = async () => {
       id: doc.id,
       ...doc.data(),
       base_premium: Number(doc.data().base_premium) || 0,
-      discount: Number(doc.data().discount) || 0,
-      finalPremium: Number(doc.data().finalPremium) || 0,
       coverage_deductible: Number(doc.data().coverage_deductible) || 0,
     }));
   } catch (error) {
     console.error("Error fetching insurance plans:", error);
-    throw error;
+    return { success: false, message: error.message };
   }
 };
 
-// 删除保险计划
 export const deleteInsurancePlan = async (planId) => {
   try {
     await deleteDoc(doc(db, "insurance_corp", planId));
@@ -30,7 +26,6 @@ export const deleteInsurancePlan = async (planId) => {
   }
 };
 
-// 更新保险计划（确保数值字段）
 export const updateInsurancePlan = async (updatedPlan) => {
   try {
     const planRef = doc(db, "insurance_corp", updatedPlan.id);

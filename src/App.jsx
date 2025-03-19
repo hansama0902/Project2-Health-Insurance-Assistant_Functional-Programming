@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import "bootstrap/dist/css/bootstrap.min.css";
 import Navbar from "./components/Navbar";
 import HealthInsuranceSection from "./components/HealthInsuranceSection";
@@ -10,10 +10,8 @@ const App = () => {
   const [filters, setFilters] = useState(null);
   const [showAddModal, setShowAddModal] = useState(false);
 
-  // ✅ 保险计划管理 Hook
   const { selectedPlans, handleSelectPlan, handleDeletePlan, handleEditPlan } = useInsuranceManager();
   
-  // ✅ 保险对比模式 Hook
   const { compareMode, enableCompareMode } = useCompareMode();
 
   return (
@@ -24,7 +22,6 @@ const App = () => {
         selectedPlans={selectedPlans}
       />
 
-      {/* ✅ 健康保险相关部分 */}
       <HealthInsuranceSection 
         filters={filters}
         setFilters={setFilters}

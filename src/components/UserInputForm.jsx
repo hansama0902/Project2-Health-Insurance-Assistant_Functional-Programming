@@ -3,7 +3,7 @@ import "../stylesheets/userInputForm.css";
 const UserInputForm = ({ onSearch }) => {
   const [age, setAge] = useState("");
   const [income, setIncome] = useState("");
-  const [tier, setTier] = useState("r");
+  const [tier, setTier] = useState("");
   const [error, setError] = useState(""); 
 
   const handleSubmit = (e) => {
@@ -21,8 +21,7 @@ const UserInputForm = ({ onSearch }) => {
 
   return (
     <form className="d-flex flex-column align-items-center" onSubmit={handleSubmit}>
-      {error && <p className="text-danger">{error}</p>} {/* Display error message */}
-      
+      {error && <p className="text-danger">{error}</p>} 
       <div className="mb-3 w-75">
         <label className="form-label">Age:</label>
         <input 

@@ -10,20 +10,16 @@ const InsuranceQuoteFetcher = ({ filters, onSelectPlan, selectedPlans }) => {
   const [plans, setPlans] = useState([]);
   const [loading, setLoading] = useState(true);
 
-  // 获取保险计划数据
   const loadPlans = useCallback(async () => {
     try {
       let plansData = await fetchInsurancePlans();
 
-      // 过滤保险等级
       if (filters?.tier && filters.tier !== "All Options") {
         plansData = plansData.filter((plan) => plan.tier === filters.tier);
       }
 
-      // 按价格排序
       plansData.sort((a, b) => a.base_premium - b.base_premium);
 
-      // 低收入用户默认 Medi-Cal 计划
       if (filters?.income < 30000) {
         const mediCalPlan = {
           id: "medi-cal",
@@ -46,7 +42,6 @@ const InsuranceQuoteFetcher = ({ filters, onSelectPlan, selectedPlans }) => {
     }
   }, [filters]);
 
-  // 删除保险计划
   const handleDeletePlan = async (planId) => {
     const result = await deleteInsurancePlan(planId);
     if (result.success) {
@@ -57,7 +52,6 @@ const InsuranceQuoteFetcher = ({ filters, onSelectPlan, selectedPlans }) => {
     }
   };
 
-  // 编辑保险计划
   const handleEditPlan = async (updatedPlan) => {
     const result = await updateInsurancePlan(updatedPlan);
     if (result.success) {
