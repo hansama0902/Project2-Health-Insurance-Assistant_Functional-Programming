@@ -6,7 +6,7 @@ import {
   updateInsurancePlan,
 } from "../utils/insuranceService";
 
-const InsuranceQuoteFetcher = ({ filters, onSelectPlan, selectedPlans }) => {
+const InsuranceQuoteFetcher = ({ filters, onSelectPlan, selectedPlans, setSelectedPlans }) => {
   const [plans, setPlans] = useState([]);
   const [loading, setLoading] = useState(true);
 
@@ -30,7 +30,7 @@ const InsuranceQuoteFetcher = ({ filters, onSelectPlan, selectedPlans }) => {
           finalPremium: 0,
           coverage_deductible: 0,
           hospital_coverage: "All Hospitals",
-          special: true,
+          special: true, 
         };
         plansData.unshift(mediCalPlan);
       }
@@ -46,12 +46,13 @@ const InsuranceQuoteFetcher = ({ filters, onSelectPlan, selectedPlans }) => {
     const result = await deleteInsurancePlan(planId);
     if (result.success) {
       setPlans((prevPlans) => prevPlans.filter((plan) => plan.id !== planId));
+      setSelectedPlans([]);
       alert(result.message);
     } else {
       alert("Failed to delete the insurance plan");
     }
   };
-
+  
   const handleEditPlan = async (updatedPlan) => {
     const result = await updateInsurancePlan(updatedPlan);
     if (result.success) {
@@ -80,6 +81,7 @@ const InsuranceQuoteFetcher = ({ filters, onSelectPlan, selectedPlans }) => {
           userAge={filters?.age}
           onSelectPlan={onSelectPlan}
           selectedPlans={selectedPlans}
+          setSelectedPlans={setSelectedPlans}
           onDeletePlan={handleDeletePlan}
           onEditPlan={handleEditPlan}
         />
@@ -89,6 +91,9 @@ const InsuranceQuoteFetcher = ({ filters, onSelectPlan, selectedPlans }) => {
 };
 
 export default InsuranceQuoteFetcher;
+
+
+
 
 
 

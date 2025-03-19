@@ -2,7 +2,16 @@ import { useState } from "react";
 import { premiumCalculator } from "../utils/premiumCalculator";
 import "../stylesheets/InsuranceQuoteTable.css";
 
-const InsuranceQuoteTable = ({ plans, userIncome, userAge, onSelectPlan, selectedPlans, onDeletePlan, onEditPlan }) => {
+const InsuranceQuoteTable = ({ 
+  plans, 
+  userIncome, 
+  userAge, 
+  onSelectPlan, 
+  selectedPlans, 
+  setSelectedPlans, 
+  onDeletePlan, 
+  onEditPlan 
+}) => {
   const [editingPlan, setEditingPlan] = useState(null);
   const [updatedPlan, setUpdatedPlan] = useState(null);
 
@@ -28,22 +37,26 @@ const InsuranceQuoteTable = ({ plans, userIncome, userAge, onSelectPlan, selecte
             const { basePremium, discount, finalPremium, originalPremium } = premiumCalculator({ plan, userIncome, userAge });
 
             const isSelected = selectedPlans.some((p) => p.id === plan.id);
-            const isMediCal = plan.special;
+            const isMediCal = plan.special; 
+
             return (
               <tr key={plan.id} className={isMediCal ? "medi-cal" : isSelected ? "table-success" : ""}>
                 <td>
-                    <input
-                      type="checkbox"
-                      checked={isSelected}
-                      onChange={() => onSelectPlan({ 
-                        ...plan,
-                        originalPremium, 
-                        basePremium, 
-                        discount, 
-                        finalPremium 
-                      })}
-                    />
-                 </td>
+                  <input
+                    type="checkbox"
+                    checked={isSelected}
+                    onChange={() => {
+                        onSelectPlan({ 
+                          ...plan,
+                          originalPremium, 
+                          basePremium, 
+                          discount, 
+                          finalPremium 
+                        });
+                      }
+                    }
+                  />
+                </td>
                 <td className={isMediCal ? "medi-cal" : ""}>{plan.insurer}</td>
                 <td className={isMediCal ? "medi-cal" : ""}>{plan.tier}</td>
                 <td className={isMediCal ? "medi-cal" : ""}>${originalPremium.toFixed(2)}</td>
@@ -54,7 +67,14 @@ const InsuranceQuoteTable = ({ plans, userIncome, userAge, onSelectPlan, selecte
                   {!plan.special && (
                     <>
                       <button className="btn btn-warning btn-sm me-2" onClick={() => setEditingPlan(plan)}>Edit</button>
-                      <button className="btn btn-danger btn-sm" onClick={() => onDeletePlan(plan.id)}>Delete</button>
+                      <button 
+                      className="btn btn-danger btn-sm" 
+                      onClick={() => {
+                      onDeletePlan(plan.id);
+                      setSelectedPlans((prevSelected) => prevSelected.filter((p) => p.id !== plan.id));
+                       }}>
+                      Delete
+                      </button>
                     </>
                   )}
                 </td>
@@ -107,4 +127,5 @@ const InsuranceQuoteTable = ({ plans, userIncome, userAge, onSelectPlan, selecte
 };
 
 export default InsuranceQuoteTable;
+
 
