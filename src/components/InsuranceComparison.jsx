@@ -29,8 +29,12 @@ const InsuranceComparison = ({ selectedPlans }) => {
             </tr>
             <tr>
               <td>Final Premium ($)</td>
-              <td><strong>${selectedPlans[0].finalPremium.toFixed(2)}</strong></td>
-              <td><strong>${selectedPlans[1].finalPremium.toFixed(2)}</strong></td>
+              <td>
+                <strong>${selectedPlans[0].finalPremium.toFixed(2)}</strong>
+              </td>
+              <td>
+                <strong>${selectedPlans[1].finalPremium.toFixed(2)}</strong>
+              </td>
             </tr>
             <tr>
               <td>Coverage Deductible ($)</td>
@@ -45,7 +49,10 @@ const InsuranceComparison = ({ selectedPlans }) => {
           </tbody>
         </table>
       </div>
-      <button className="btn btn-danger mb-3" onClick={() => window.location.reload()}>
+      <button
+        className="btn btn-danger mb-3"
+        onClick={() => window.location.reload()}
+      >
         Exit Comparison
       </button>
     </div>
@@ -53,7 +60,3 @@ const InsuranceComparison = ({ selectedPlans }) => {
 };
 
 export default InsuranceComparison;
-
-
-
-  

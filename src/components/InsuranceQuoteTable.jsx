@@ -2,15 +2,14 @@ import { useState } from "react";
 import { premiumCalculator } from "../utils/premiumCalculator";
 import "../stylesheets/InsuranceQuoteTable.css";
 
-const InsuranceQuoteTable = ({ 
-  plans, 
-  userIncome, 
-  userAge, 
-  onSelectPlan, 
-  selectedPlans, 
-  setSelectedPlans, 
-  onDeletePlan, 
-  onEditPlan 
+const InsuranceQuoteTable = ({
+  plans,
+  userIncome,
+  userAge,
+  selectedPlans,
+  setSelectedPlans,
+  onDeletePlan,
+  onEditPlan,
 }) => {
   const [editingPlan, setEditingPlan] = useState(null);
   const [updatedPlan, setUpdatedPlan] = useState(null);
@@ -34,46 +33,76 @@ const InsuranceQuoteTable = ({
         </thead>
         <tbody>
           {plans.map((plan) => {
-            const { basePremium, discount, finalPremium, originalPremium } = premiumCalculator({ plan, userIncome, userAge });
+            const { basePremium, discount, finalPremium, originalPremium } =
+              premiumCalculator({ plan, userIncome, userAge });
 
             const isSelected = selectedPlans.some((p) => p.id === plan.id);
-            const isMediCal = plan.special; 
+            const isMediCal = plan.special;
+
+            const calculatedPlan = {
+              ...plan,
+              originalPremium,
+              basePremium,
+              discount,
+              finalPremium,
+            };
 
             return (
-              <tr key={plan.id} className={isMediCal ? "medi-cal" : isSelected ? "table-success" : ""}>
+              <tr
+                key={plan.id}
+                className={
+                  isMediCal ? "medi-cal" : isSelected ? "table-success" : ""
+                }
+              >
                 <td>
                   <input
                     type="checkbox"
                     checked={isSelected}
                     onChange={() => {
-                        onSelectPlan({ 
-                          ...plan,
-                          originalPremium, 
-                          basePremium, 
-                          discount, 
-                          finalPremium 
-                        });
+                      if (isSelected) {
+                        setSelectedPlans((prev) =>
+                          prev.filter((p) => p.id !== plan.id),
+                        );
+                      } else {
+                        if (selectedPlans.length >= 2) {
+                          alert(
+                            "You can only compare up to two insurance plans.",
+                          );
+                          return;
+                        }
+                        setSelectedPlans((prev) => [...prev, calculatedPlan]);
                       }
-                    }
+                    }}
                   />
                 </td>
                 <td className={isMediCal ? "medi-cal" : ""}>{plan.insurer}</td>
                 <td className={isMediCal ? "medi-cal" : ""}>{plan.tier}</td>
-                <td className={isMediCal ? "medi-cal" : ""}>${originalPremium.toFixed(2)}</td>
-                <td className={isMediCal ? "medi-cal" : ""}>${basePremium.toFixed(2)}</td>
-                <td className={isMediCal ? "medi-cal" : ""}>${discount.toFixed(2)}</td>
-                <td className={isMediCal ? "medi-cal" : ""}><strong>${finalPremium.toFixed(2)}</strong></td>
+                <td className={isMediCal ? "medi-cal" : ""}>
+                  ${originalPremium.toFixed(2)}
+                </td>
+                <td className={isMediCal ? "medi-cal" : ""}>
+                  ${basePremium.toFixed(2)}
+                </td>
+                <td className={isMediCal ? "medi-cal" : ""}>
+                  ${discount.toFixed(2)}
+                </td>
+                <td className={isMediCal ? "medi-cal" : ""}>
+                  <strong>${finalPremium.toFixed(2)}</strong>
+                </td>
                 <td>
                   {!plan.special && (
                     <>
-                      <button className="btn btn-warning btn-sm me-2" onClick={() => setEditingPlan(plan)}>Edit</button>
-                      <button 
-                      className="btn btn-danger btn-sm" 
-                      onClick={() => {
-                      onDeletePlan(plan.id);
-                      setSelectedPlans((prevSelected) => prevSelected.filter((p) => p.id !== plan.id));
-                       }}>
-                      Delete
+                      <button
+                        className="btn btn-warning btn-sm me-2"
+                        onClick={() => setEditingPlan(plan)}
+                      >
+                        Edit
+                      </button>
+                      <button
+                        className="btn btn-danger btn-sm"
+                        onClick={() => onDeletePlan(plan.id)}
+                      >
+                        Delete
                       </button>
                     </>
                   )}
@@ -90,28 +119,38 @@ const InsuranceQuoteTable = ({
             <div className="modal-content">
               <div className="modal-header">
                 <h5 className="modal-title">Edit Insurance Plan</h5>
-                <button className="btn-close" onClick={() => setEditingPlan(null)}></button>
+                <button
+                  className="btn-close"
+                  onClick={() => setEditingPlan(null)}
+                ></button>
               </div>
               <div className="modal-body">
                 <label>Base Premium ($)</label>
-                <input 
-                  type="number" 
-                  className="form-control" 
-                  placeholder="Enter new premium" 
-                  value={updatedPlan?.base_premium || editingPlan.base_premium} 
-                  onChange={(e) => setUpdatedPlan({ 
-                    ...editingPlan, 
-                    base_premium: Number(e.target.value) || 0 
-                  })}
+                <input
+                  type="number"
+                  className="form-control"
+                  placeholder="Enter new premium"
+                  value={updatedPlan?.base_premium || editingPlan.base_premium}
+                  onChange={(e) =>
+                    setUpdatedPlan({
+                      ...editingPlan,
+                      base_premium: Number(e.target.value) || 0,
+                    })
+                  }
                 />
               </div>
               <div className="modal-footer">
-                <button className="btn btn-secondary" onClick={() => setEditingPlan(null)}>Cancel</button>
-                <button 
-                  className="btn btn-primary" 
-                  onClick={() => { 
-                    onEditPlan(updatedPlan); 
-                    setEditingPlan(null); 
+                <button
+                  className="btn btn-secondary"
+                  onClick={() => setEditingPlan(null)}
+                >
+                  Cancel
+                </button>
+                <button
+                  className="btn btn-primary"
+                  onClick={() => {
+                    onEditPlan(updatedPlan);
+                    setEditingPlan(null);
                   }}
                   disabled={!updatedPlan}
                 >
@@ -127,5 +166,3 @@ const InsuranceQuoteTable = ({
 };
 
 export default InsuranceQuoteTable;
-
-

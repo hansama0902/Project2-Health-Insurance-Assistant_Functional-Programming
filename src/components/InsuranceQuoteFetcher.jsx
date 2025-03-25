@@ -6,7 +6,11 @@ import {
   updateInsurancePlan,
 } from "../utils/insuranceService";
 
-const InsuranceQuoteFetcher = ({ filters, onSelectPlan, selectedPlans, setSelectedPlans }) => {
+const InsuranceQuoteFetcher = ({
+  filters,
+  selectedPlans,
+  setSelectedPlans,
+}) => {
   const [plans, setPlans] = useState([]);
   const [loading, setLoading] = useState(true);
 
@@ -30,34 +34,54 @@ const InsuranceQuoteFetcher = ({ filters, onSelectPlan, selectedPlans, setSelect
           finalPremium: 0,
           coverage_deductible: 0,
           hospital_coverage: "All Hospitals",
-          special: true, 
+          special: true,
         };
         plansData.unshift(mediCalPlan);
       }
 
       setPlans(plansData);
+
+      // 同步选中项（确保 selectedPlans 不包含已不存在的 plan）
+      const filteredSelected = selectedPlans.filter((p) =>
+        plansData.find((plan) => plan.id === p.id),
+      );
+      setSelectedPlans(filteredSelected);
+
       setLoading(false);
     } catch {
       setLoading(false);
     }
-  }, [filters]);
+  }, [filters, selectedPlans, setSelectedPlans]);
 
   const handleDeletePlan = async (planId) => {
     const result = await deleteInsurancePlan(planId);
     if (result.success) {
-      setPlans((prevPlans) => prevPlans.filter((plan) => plan.id !== planId));
-      setSelectedPlans([]);
+      const updatedPlans = plans.filter((plan) => plan.id !== planId);
+      setPlans(updatedPlans);
+
+      const updatedSelectedPlans = selectedPlans
+        .filter((plan) => plan.id !== planId)
+        .filter((plan) => updatedPlans.find((p) => p.id === plan.id));
+
+      if (updatedSelectedPlans.length === 0 && updatedPlans.length > 0) {
+        setSelectedPlans([updatedPlans[0]]);
+      } else {
+        setSelectedPlans(updatedSelectedPlans);
+      }
+
       alert(result.message);
     } else {
       alert("Failed to delete the insurance plan");
     }
   };
-  
+
   const handleEditPlan = async (updatedPlan) => {
     const result = await updateInsurancePlan(updatedPlan);
     if (result.success) {
       setPlans((prevPlans) =>
-        prevPlans.map((plan) => (plan.id === updatedPlan.id ? updatedPlan : plan))
+        prevPlans.map((plan) =>
+          plan.id === updatedPlan.id ? updatedPlan : plan,
+        ),
       );
       alert(result.message);
     } else {
@@ -79,7 +103,6 @@ const InsuranceQuoteFetcher = ({ filters, onSelectPlan, selectedPlans, setSelect
           plans={plans}
           userIncome={filters?.income}
           userAge={filters?.age}
-          onSelectPlan={onSelectPlan}
           selectedPlans={selectedPlans}
           setSelectedPlans={setSelectedPlans}
           onDeletePlan={handleDeletePlan}
@@ -91,12 +114,3 @@ const InsuranceQuoteFetcher = ({ filters, onSelectPlan, selectedPlans, setSelect
 };
 
 export default InsuranceQuoteFetcher;
-
-
-
-
-
-
-
-
-

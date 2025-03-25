@@ -14,19 +14,35 @@ const Navbar = ({ onAddInsurance, onCompareModeChange, selectedPlans }) => {
   return (
     <nav className="navbar navbar-expand-lg navbar-dark bg-dark w-100">
       <div className="container-fluid">
-        <a className="navbar-brand" href="#" onClick={() => window.location.reload()}>
+        <a
+          className="navbar-brand"
+          href="#"
+          onClick={() => window.location.reload()}
+        >
           Home
         </a>
 
-        <button className="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+        <button
+          className="navbar-toggler"
+          type="button"
+          data-bs-toggle="collapse"
+          data-bs-target="#navbarNav"
+        >
           <span className="navbar-toggler-icon"></span>
         </button>
 
-        <div className="collapse navbar-collapse justify-content-end" id="navbarNav">
+        <div
+          className="collapse navbar-collapse justify-content-end"
+          id="navbarNav"
+        >
           <button className="btn btn-success mx-2" onClick={onAddInsurance}>
             Add Insurance
           </button>
-          <button className="btn btn-primary" onClick={handleCompareClick} disabled={isCompareDisabled}>
+          <button
+            className="btn btn-primary"
+            onClick={handleCompareClick}
+            disabled={isCompareDisabled}
+          >
             Compare Plans
           </button>
         </div>
@@ -36,6 +52,3 @@ const Navbar = ({ onAddInsurance, onCompareModeChange, selectedPlans }) => {
 };
 
 export default Navbar;
-
-
-

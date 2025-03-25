@@ -3,10 +3,14 @@ import UserInputForm from "./UserInputForm";
 import InsuranceQuoteFetcher from "./InsuranceQuoteFetcher";
 import InsuranceComparison from "./InsuranceComparison";
 
-const HealthInsuranceSection = ({ 
-  filters, setFilters, 
-  compareMode, selectedPlans, 
-  onSelectPlan, onDeletePlan, onEditPlan 
+const HealthInsuranceSection = ({
+  filters,
+  setFilters,
+  compareMode,
+  selectedPlans,
+  setSelectedPlans,
+  onDeletePlan,
+  onEditPlan,
 }) => {
   return (
     <div className="container text-center">
@@ -21,12 +25,12 @@ const HealthInsuranceSection = ({
           <InsuranceComparison selectedPlans={selectedPlans} />
         ) : (
           filters && (
-            <InsuranceQuoteFetcher 
-              filters={filters} 
-              onSelectPlan={onSelectPlan} 
+            <InsuranceQuoteFetcher
+              filters={filters}
+              setSelectedPlans={setSelectedPlans}
               selectedPlans={selectedPlans}
-              onDeletePlan={onDeletePlan} 
-              onEditPlan={onEditPlan} 
+              onDeletePlan={onDeletePlan}
+              onEditPlan={onEditPlan}
             />
           )
         )}

@@ -1,9 +1,11 @@
 import { useState } from "react";
-import { deleteInsurancePlan, updateInsurancePlan } from "../utils/insuranceService"; 
+import {
+  deleteInsurancePlan,
+  updateInsurancePlan,
+} from "../utils/insuranceService";
 
 const useInsuranceManager = () => {
   const [selectedPlans, setSelectedPlans] = useState([]);
-
 
   const handleSelectPlan = (plan) => {
     setSelectedPlans((prev) => {
@@ -27,7 +29,13 @@ const useInsuranceManager = () => {
     alert(result.message);
   };
 
-  return { selectedPlans, handleSelectPlan, handleDeletePlan, handleEditPlan };
+  return {
+    selectedPlans,
+    setSelectedPlans,
+    handleSelectPlan,
+    handleDeletePlan,
+    handleEditPlan,
+  };
 };
 
 export default useInsuranceManager;
