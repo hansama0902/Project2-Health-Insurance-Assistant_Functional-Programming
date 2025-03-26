@@ -81,10 +81,7 @@ Then, visit `http://localhost:5173` in your browser.
 
 - **Video Demonstration:** [Link]
 
-- **UML Diagram:** [Link]([https://lucid.app/lucidchart/62c26d22-6be1-4acb-ba23-
-cebe6418b7af/edit?viewport_loc=-1646%2C-
-1192%2C4571%2C3445%2C0_0&invitationId=inv_86c2605e-a900-4f64-b60d-
-4522e29f4ac1](https://lucid.app/lucidchart/62c26d22-6be1-4acb-ba23-cebe6418b7af/edit?viewport_loc=-1646%2C-1252%2C4571%2C3563%2C0_0&invitationId=inv_86c2605e-a900-4f64-b60d-4522e29f4ac1))
+- **UML Diagram:** [Link](https://lucid.app/lucidchart/62c26d22-6be1-4acb-ba23-cebe6418b7af/edit?viewport_loc=-1646%2C-1252%2C4571%2C3563%2C0_0&invitationId=inv_86c2605e-a900-4f64-b60d-4522e29f4ac1))
 
 - **Figma Design:** [Link](https://www.figma.com/design/ksccS9X5VI09JCaygX1w7I/Interface-Mockups?node-id=0-1&m=dev&t=CwdkuD8Z3wasC26g-1)
 
