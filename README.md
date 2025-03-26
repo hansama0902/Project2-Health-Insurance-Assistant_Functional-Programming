@@ -79,9 +79,7 @@ Then, visit `http://localhost:5173` in your browser.
 
 ## Functional Programming Examples（filter, map, and reduce）
 
-This section is part of a larger design and reflection document. It focuses on how functional programming methods are applied using array functions in the InsuranceQuoteFetcher component.
-
-Three core array methods are highlighted here: filter, map, and reduce. For each method, we explain its use in the code, why it is a good application of functional programming (FP), and include a hypothetical imperative-style code example that would break or violate FP principles.
+Three core array methods are highlighted here: filter, map, and reduce.  
 
 ---
 
