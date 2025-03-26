@@ -41,10 +41,11 @@ const InsuranceQuoteFetcher = ({
 
       setPlans(plansData);
 
-      // 同步选中项（确保 selectedPlans 不包含已不存在的 plan）
-      const filteredSelected = selectedPlans.filter((p) =>
-        plansData.find((plan) => plan.id === p.id),
-      );
+      const filteredSelected = selectedPlans.reduce((acc, p) => {
+        if (plansData.find((plan) => plan.id === p.id)) acc.push(p);
+        return acc;
+      }, []);
+      
       setSelectedPlans(filteredSelected);
 
       setLoading(false);

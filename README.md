@@ -77,6 +77,85 @@ Then, visit `http://localhost:5173` in your browser.
 
 ---
 
+## Functional Programming Examples（filter, map, and reduce）
+
+This section is part of a larger design and reflection document. It focuses on how functional programming methods are applied using array functions in the InsuranceQuoteFetcher component.
+
+Three core array methods are highlighted here: filter, map, and reduce. For each method, we explain its use in the code, why it is a good application of functional programming (FP), and give a hypothetical non-code example that would break or violate the concept.
+
+---
+
+### 1. Using filter to narrow down plans by tier
+
+#### Code Example
+
+```javascript
+if (filters?.tier && filters.tier !== "All Options") {
+  plansData = plansData.filter((plan) => plan.tier === filters.tier);
+}
+```
+
+#### Why this is a good FP practice
+
+- This usage is declarative and clear. It focuses on what we want (filtered plans), not how to loop through them.
+- It returns a new array without mutating the original data.
+- Functional code like this reduces room for errors and improves readability.
+
+#### Hypothetical non-code example
+
+Imagine you are selecting apples at a grocery store. If you grab every apple and inspect each one by opening it up, then try to tape them back and put some in a basket, the process becomes messy and error-prone.
+
+Instead, using a filter approach is like checking the labels and selecting only the "organic" ones from the shelf without damaging the rest. You keep the selection clean and avoid side effects.
+
+---
+
+### 2. Using map to update a specific plan
+
+#### Code Example
+
+```javascript
+setPlans((prevPlans) =>
+  prevPlans.map((plan) =>
+    plan.id === updatedPlan.id ? updatedPlan : plan
+  )
+);
+```
+
+#### Why this is a good FP practice
+
+- map creates a new array without changing the original one, preserving immutability.
+- This aligns perfectly with React's principle of state updates being pure and predictable.
+- It’s easy to understand and scale.
+
+#### Hypothetical non-code example
+
+Imagine a classroom of students. One student changes their name. Instead of changing the name tag on each desk one by one, you go through a printed list and only change the entry for the student who updated their info, then reprint the list. That’s what map does: it builds a new version without changing the original data directly.
+
+---
+
+### 3. Using reduce to synchronize selected plans
+
+#### Code Example
+
+```javascript
+const filteredSelected = selectedPlans.reduce((acc, p) => {
+  if (plansData.find((plan) => plan.id === p.id)) acc.push(p);
+  return acc;
+}, []);
+```
+
+#### Why this is a good FP practice
+
+- reduce is powerful when you want to accumulate or transform data into a new structure.
+- In this case, it checks each selected plan and accumulates only the valid ones.
+- It avoids nested loops or side-effect-based filtering.
+
+#### Hypothetical non-code example
+
+Think of packing for a trip. You have a checklist of items to bring, but not all of them are currently available in your house. Using reduce is like going through your list and adding only the items that you actually find in your house to the suitcase. You end up with a clean, updated packing list that reflects reality.
+
+---
+
 ## License
 
 This project is licensed under the **MIT License**.
