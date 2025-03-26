@@ -120,7 +120,7 @@ const InsuranceQuoteTable = ({
                 ></button>
               </div>
               <div className="modal-body">
-                <label>Base Premium ($)</label>
+                <label>Original Premium ($)</label>
                 <input
                   type="number"
                   className="form-control"

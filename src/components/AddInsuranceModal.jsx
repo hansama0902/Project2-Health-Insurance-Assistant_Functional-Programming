@@ -112,7 +112,7 @@ const AddInsuranceModal = ({ show, handleClose }) => {
                 </select>
               </div>
               <div className="mb-3">
-                <label className="form-label">Base Premium ($)</label>
+                <label className="form-label">Original Premium ($)</label>
                 <input
                   type="number"
                   className="form-control"

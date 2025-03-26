@@ -53,12 +53,12 @@ const InsuranceQuoteFetcher = ({
         .filter((plan) => plan.id !== planId)
         .filter((plan) => updatedPlans.find((p) => p.id === plan.id));
 
-      if (updatedSelectedPlans.length === 0 && updatedPlans.length > 0) {
-        setSelectedPlans([updatedPlans[0]]);
-      } else {
-        setSelectedPlans(updatedSelectedPlans);
-      }
-
+      // if (updatedSelectedPlans.length === 0 && updatedPlans.length > 0) {
+      //   setSelectedPlans([updatedPlans[0]]);
+      // } else {
+      //   setSelectedPlans(updatedSelectedPlans);
+      // }
+      setSelectedPlans(updatedSelectedPlans);
       alert(result.message);
     } else {
       alert("Failed to delete the insurance plan");
