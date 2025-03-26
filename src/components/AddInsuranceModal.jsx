@@ -2,6 +2,7 @@ import React, { useState, useEffect, useCallback } from "react";
 import { db } from "../../db/firebaseConfig";
 import { collection, addDoc } from "firebase/firestore";
 import "../stylesheets/addInsuranceModal.css";
+import PropTypes from "prop-types";
 
 const AddInsuranceModal = ({ show, handleClose }) => {
   const [insuranceData, setInsuranceData] = useState({
@@ -169,6 +170,10 @@ const AddInsuranceModal = ({ show, handleClose }) => {
       </div>
     </div>
   );
+};
+AddInsuranceModal.propTypes = {
+  show: PropTypes.bool.isRequired,
+  handleClose: PropTypes.func.isRequired,
 };
 
 export default AddInsuranceModal;

@@ -1,7 +1,8 @@
-// HealthInsuranceSection.jsx
+import React from "react";
 import UserInputForm from "./UserInputForm";
 import InsuranceQuoteFetcher from "./InsuranceQuoteFetcher";
 import InsuranceComparison from "./InsuranceComparison";
+import PropTypes from "prop-types";
 
 const HealthInsuranceSection = ({
   filters,
@@ -41,6 +42,16 @@ const HealthInsuranceSection = ({
       </div>
     </div>
   );
+};
+HealthInsuranceSection.propTypes = {
+  filters: PropTypes.object,
+  setFilters: PropTypes.func.isRequired,
+  compareMode: PropTypes.bool.isRequired,
+  disableCompareMode: PropTypes.func.isRequired,
+  selectedPlans: PropTypes.array.isRequired,
+  setSelectedPlans: PropTypes.func.isRequired,
+  onDeletePlan: PropTypes.func.isRequired,
+  onEditPlan: PropTypes.func.isRequired,
 };
 
 export default HealthInsuranceSection;

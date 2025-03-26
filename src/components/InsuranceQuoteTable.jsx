@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { createCalculatedPlan } from "../utils/PlanFactory";
 import "../stylesheets/InsuranceQuoteTable.css";
+import PropTypes from "prop-types";
 
 const InsuranceQuoteTable = ({
   plans,
@@ -157,6 +158,27 @@ const InsuranceQuoteTable = ({
       )}
     </div>
   );
+};
+InsuranceQuoteTable.propTypes = {
+  plans: PropTypes.arrayOf(
+    PropTypes.shape({
+      id: PropTypes.string.isRequired,
+      insurer: PropTypes.string.isRequired,
+      tier: PropTypes.string.isRequired,
+      base_premium: PropTypes.number.isRequired,
+      special: PropTypes.bool,
+    }),
+  ).isRequired,
+  userIncome: PropTypes.number.isRequired,
+  userAge: PropTypes.number.isRequired,
+  selectedPlans: PropTypes.arrayOf(
+    PropTypes.shape({
+      id: PropTypes.string.isRequired,
+    }),
+  ).isRequired,
+  setSelectedPlans: PropTypes.func.isRequired,
+  onDeletePlan: PropTypes.func.isRequired,
+  onEditPlan: PropTypes.func.isRequired,
 };
 
 export default InsuranceQuoteTable;

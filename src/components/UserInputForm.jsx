@@ -1,5 +1,6 @@
-import { useState } from "react";
+import React, { useState } from "react";
 import "../stylesheets/userInputForm.css";
+import PropTypes from "prop-types";
 const UserInputForm = ({ onSearch }) => {
   const [age, setAge] = useState("");
   const [income, setIncome] = useState("");
@@ -11,6 +12,10 @@ const UserInputForm = ({ onSearch }) => {
 
     if (age <= 0 || income <= 0) {
       setError("Age and income must be positive numbers.");
+      return;
+    }
+    if (age > 150) {
+      setError("Age must be valid numbers.");
       return;
     }
 
@@ -67,6 +72,9 @@ const UserInputForm = ({ onSearch }) => {
       </button>
     </form>
   );
+};
+UserInputForm.propTypes = {
+  onSearch: PropTypes.func.isRequired,
 };
 
 export default UserInputForm;

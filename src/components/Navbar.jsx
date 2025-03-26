@@ -1,4 +1,6 @@
+import React from "react";
 import "bootstrap/dist/css/bootstrap.min.css";
+import PropTypes from "prop-types";
 
 const Navbar = ({ onAddInsurance, onCompareModeChange, selectedPlans }) => {
   const handleCompareClick = () => {
@@ -49,6 +51,11 @@ const Navbar = ({ onAddInsurance, onCompareModeChange, selectedPlans }) => {
       </div>
     </nav>
   );
+};
+Navbar.propTypes = {
+  onAddInsurance: PropTypes.func.isRequired,
+  onCompareModeChange: PropTypes.func.isRequired,
+  selectedPlans: PropTypes.array.isRequired,
 };
 
 export default Navbar;

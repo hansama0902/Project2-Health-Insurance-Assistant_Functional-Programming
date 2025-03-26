@@ -1,11 +1,10 @@
-import { useState, useEffect, useCallback } from "react";
+import React, { useState, useEffect, useCallback } from "react";
+import PropTypes from "prop-types";
 import InsuranceQuoteTable from "./InsuranceQuoteTable";
 import mediCalPlanSingleton from "../utils/MediCalPlanSingleton";
-import {
-  fetchInsurancePlans,
-  deleteInsurancePlan,
-  updateInsurancePlan,
-} from "../utils/insuranceService";
+import fetchInsurancePlans from "../utils/fetchInsurancePlans";
+import deleteInsurancePlan from "../utils/deleteInsurancePlan";
+import updateInsurancePlan from "../utils/updateInsurancePlan";
 
 const InsuranceQuoteFetcher = ({
   filters,
@@ -103,6 +102,15 @@ const InsuranceQuoteFetcher = ({
       )}
     </div>
   );
+};
+InsuranceQuoteFetcher.propTypes = {
+  filters: PropTypes.shape({
+    tier: PropTypes.string,
+    income: PropTypes.number,
+    age: PropTypes.number,
+  }),
+  selectedPlans: PropTypes.arrayOf(PropTypes.object).isRequired,
+  setSelectedPlans: PropTypes.func.isRequired,
 };
 
 export default InsuranceQuoteFetcher;

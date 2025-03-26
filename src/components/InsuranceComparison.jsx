@@ -1,3 +1,6 @@
+import React from "react";
+import PropTypes from "prop-types";
+
 const InsuranceComparison = ({ selectedPlans, onExitComparison }) => {
   return (
     <div>
@@ -54,6 +57,20 @@ const InsuranceComparison = ({ selectedPlans, onExitComparison }) => {
       </button>
     </div>
   );
+};
+InsuranceComparison.propTypes = {
+  selectedPlans: PropTypes.arrayOf(
+    PropTypes.shape({
+      insurer: PropTypes.string.isRequired,
+      tier: PropTypes.string.isRequired,
+      basePremium: PropTypes.number.isRequired,
+      discount: PropTypes.number.isRequired,
+      finalPremium: PropTypes.number.isRequired,
+      coverage_deductible: PropTypes.number.isRequired,
+      hospital_coverage: PropTypes.string.isRequired,
+    }),
+  ).isRequired,
+  onExitComparison: PropTypes.func.isRequired,
 };
 
 export default InsuranceComparison;

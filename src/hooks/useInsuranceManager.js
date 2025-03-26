@@ -1,8 +1,6 @@
 import { useState } from "react";
-import {
-  deleteInsurancePlan,
-  updateInsurancePlan,
-} from "../utils/insuranceService";
+import deleteInsurancePlan from "../utils/deleteInsurancePlan";
+import updateInsurancePlan from "../utils/updateInsurancePlan";
 
 const useInsuranceManager = () => {
   const [selectedPlans, setSelectedPlans] = useState([]);

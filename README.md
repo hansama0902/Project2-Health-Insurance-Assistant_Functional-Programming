@@ -3,6 +3,7 @@
 **Health Insurance Assistant** is a user-friendly application designed to help California residents quickly access personalized health insurance plans and quotes. Users can input their age, annual income, and insurance preferences to view available health insurance options from Covered California partner insurers, such as Anthem Blue Cross and Kaiser Permanente. The application clearly indicates eligibility for special discounted insurance options, providing transparent and detailed plan comparisons to assist users in making informed decisions. By highlighting special discounts for eligible users, the Health Insurance Assistant simplifies the process of selecting the best insurance coverage, making it efficient and accessible for everyone.
 
 ---
+
 ## Author
 
 **Shuhan Dong**
@@ -15,6 +16,7 @@ CS 5010 Program Design Paradigms
 Instructor: John Alexis Guerra Gómez [Profile](https://johnguerra.co/)
 
 ---
+
 ## Key Features
 
 - **Personalized Plan Recommendations:** Provides tailored insurance plan suggestions based on the user's age, income, and preferences.
@@ -73,6 +75,7 @@ Then, visit `http://localhost:5173` in your browser.
 - **`InsuranceComparison`:** Allows users to compare selected insurance plans side-by-side for informed decision-making.
 
 ---
+
 ### Database Schema
 
 This application uses Firestore with a single collection named `insurance_corp`. Each document in the collection represents an insurance plan with the following schema:
@@ -94,19 +97,23 @@ This application uses Firestore with a single collection named `insurance_corp`.
 Used ChatGPT (GPT-4) to assist with the following functional programming and project design topics:
 
 1. **Component Design & React Hooks**
-   - *Prompt:* What are React Hooks, and how can I implement stateful logic using them for a health insurance quote system?
+
+   - _Prompt:_ What are React Hooks, and how can I implement stateful logic using them for a health insurance quote system?
 
 2. **CRUD with Firestore (No Backend)**
-   - *Prompt:* How do I implement full CRUD operations on a Firestore collection directly from the frontend using Firebase SDK?
+
+   - _Prompt:_ How do I implement full CRUD operations on a Firestore collection directly from the frontend using Firebase SDK?
 
 3. **Functional Programming Refactoring**
-   - *Prompt:* How to refactor imperative React code to use functional programming principles like map, reduce, and filter properly?
+
+   - _Prompt:_ How to refactor imperative React code to use functional programming principles like map, reduce, and filter properly?
 
 4. **Design Pattern Integration**
-   - *Prompt:* Can I use Singleton or Factory Pattern inside a React app using only functional components? Show me an example with insurance plans.
+
+   - _Prompt:_ Can I use Singleton or Factory Pattern inside a React app using only functional components? Show me an example with insurance plans.
 
 5. **UML Diagram Structuring for Functional Components**
-   - *Prompt:* How do I represent functional React components and hooks in a UML-like structure without using class-based inheritance?
+   - _Prompt:_ How do I represent functional React components and hooks in a UML-like structure without using class-based inheritance?
 
 ---
 
