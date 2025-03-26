@@ -62,6 +62,51 @@ Then, visit `http://localhost:5173` in your browser.
 - **`InsuranceComparison`:** Allows users to compare selected insurance plans side-by-side for informed decision-making.
 
 ---
+### Database Schema
+
+This application uses Firestore with a single collection named `insurance_corp`. Each document in the collection represents an insurance plan with the following schema:
+
+```json
+{
+  "base_premium": 1000,
+  "coverage_deductible": 1000,
+  "hospital_coverage": "On Blue System",
+  "insurer": "KAISER PERMANENTE2",
+  "tier": "Silver"
+}
+```
+
+---
+
+### Usage of GenAI
+
+Used ChatGPT (GPT-4) to assist with the following functional programming and project design topics:
+
+1. **Component Design & React Hooks**
+   - *Prompt:* What are React Hooks, and how can I implement stateful logic using them for a health insurance quote system?
+
+2. **CRUD with Firestore (No Backend)**
+   - *Prompt:* How do I implement full CRUD operations on a Firestore collection directly from the frontend using Firebase SDK?
+
+3. **Functional Programming Refactoring**
+   - *Prompt:* How to refactor imperative React code to use functional programming principles like map, reduce, and filter properly?
+
+4. **Design Pattern Integration**
+   - *Prompt:* Can I use Singleton or Factory Pattern inside a React app using only functional components? Show me an example with insurance plans.
+
+5. **UML Diagram Structuring for Functional Components**
+   - *Prompt:* How do I represent functional React components and hooks in a UML-like structure without using class-based inheritance?
+
+---
+
+### CRUD Operations Overview (Firestore Collection: insurance_corp)
+
+- **Create:** New insurance plans are added via `AddInsuranceModal` and stored in Firestore using `addDoc()`.
+- **Read:** All plans are fetched in `InsuranceQuoteFetcher` using `getDocs()` and filtered based on user input.
+- **Update:** Plans are edited through the modal and updated using `updateDoc()` in Firestore.
+- **Delete:** Plans are removed via the delete button using `deleteDoc()`.
+
+---
 
 ## Resources
 
