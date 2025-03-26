@@ -66,7 +66,7 @@ Then, visit `http://localhost:5173` in your browser.
 ## Resources
 
 - **Deployed:** [Link](https://health-insurance-assistant.web.app)
-- **Demonstrate the Application of Functional Programming** - [Link](https://github.com/hansama0902/Project2-Health-Insurance-Assistant_Functional-Programming/blob/main/functional%20programming%20examples/README.md)
+- **Demonstrate the Application of Functional Programming:** [Link](https://github.com/hansama0902/Project2-Health-Insurance-Assistant_Functional-Programming/blob/main/functional%20programming%20examples/README.md)
 
 - **Video Demonstration:** [Link]
 
