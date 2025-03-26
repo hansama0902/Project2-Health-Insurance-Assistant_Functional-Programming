@@ -7,6 +7,8 @@
 
 **Shuhan Dong**
 
+---
+
 ## Class Link
 
 CS 5010 Program Design Paradigms  
