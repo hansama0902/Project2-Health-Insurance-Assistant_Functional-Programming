@@ -199,8 +199,6 @@ This section highlights how three core design patterns—**Singleton**, **Factor
 
 ### 1. Singleton Pattern
 
-**Correct Usage (your code):**
-
 ```js
 // utils/MediCalPlanSingleton.js
 const mediCalPlanSingleton = (() => {
@@ -222,7 +220,7 @@ const mediCalPlanSingleton = (() => {
 })();
 ```
 
-This ensures only **one Medi-Cal plan** exists in memory and is reused throughout the app.
+This ensures only **one Medi-Cal plan** exists in memory and is reused throughout the app.  
 **Why it's good FP:**
 
 - Avoids side effects: the same data is reused and not recreated.
@@ -237,11 +235,14 @@ function getLogger() {
   return { log: (msg) => console.log(msg) };
 }
 ```
+**Why it’s a broken Singleton:**
+- Every call to getLogger() creates a new object, so logger1 !== logger2.
+- Singleton requires a single shared instance across the entire application.
+- This breaks consistency and can lead to duplicated state, inefficient memory usage, and hard-to-track bugs in shared logic.
+
 ---
 
-### 2. Factory Pattern
-
-**Correct Usage (your code):**
+### 2. Factory Pattern  
 
 ```js
 import { premiumCalculator } from "./premiumCalculator";
@@ -263,6 +264,17 @@ function createCalculatedPlan(plan, userIncome, userAge) {
 }
 export { createCalculatedPlan };
 ```
+
+```js
+ {
+    plans.map((plan) => {
+            const calculatedPlan = createCalculatedPlan(plan, userIncome, userAge);
+
+            const isSelected = selectedPlans.some((p) => p.id === plan.id);
+            const isMediCal = plan.special;
+ })
+ }
+```
 **Why it's good FP:**
 
 - Factory functions are pure: same input → same output.
@@ -277,11 +289,15 @@ const car1 = { make: "Honda", wheels: 4 };
 const car2 = { make: "Toyota", wheels: 4 };
 ```
 
+**Why it’s a broken Factory:**  
+
+ - The object creation logic is manual and duplicated.
+ - There’s no centralized logic to enforce structure or defaults, leading to inconsistency and repetitive code.
+ - Factory pattern helps ensure all objects of the same type are created in a uniform and reusable way — which this example lacks.
+
 ---
 
-### 3. Module Pattern
-
-**Correct Usage (your code):**
+### 3. Module Pattern  
 
 ```js
 import { useState } from "react";
@@ -339,6 +355,11 @@ window.saveToDisk = () => {};
 window.readFromDisk = () => {};
 ```
 ---
+
+**Why it’s a broken Module:**
+- All functions are attached to the global scope, increasing the risk of name collisions and unintentional overwrites.
+- Module pattern promotes encapsulation, scoped variables, and explicit exports, none of which are present here.
+- This approach makes testing, reuse, and maintenance harder, especially as the codebase grows.
 
 ## License
 
