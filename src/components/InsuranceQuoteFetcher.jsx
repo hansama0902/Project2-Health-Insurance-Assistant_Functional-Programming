@@ -1,5 +1,6 @@
 import { useState, useEffect, useCallback } from "react";
 import InsuranceQuoteTable from "./InsuranceQuoteTable";
+import mediCalPlanSingleton from "../utils/MediCalPlanSingleton";
 import {
   fetchInsurancePlans,
   deleteInsurancePlan,
@@ -21,22 +22,11 @@ const InsuranceQuoteFetcher = ({
       if (filters?.tier && filters.tier !== "All Options") {
         plansData = plansData.filter((plan) => plan.tier === filters.tier);
       }
-
+      // filter()
       plansData.sort((a, b) => a.base_premium - b.base_premium);
 
       if (filters?.income < 30000) {
-        const mediCalPlan = {
-          id: "medi-cal",
-          insurer: "Medi-Cal",
-          tier: "Special",
-          base_premium: 0,
-          discount: 0,
-          finalPremium: 0,
-          coverage_deductible: 0,
-          hospital_coverage: "All Hospitals",
-          special: true,
-        };
-        plansData.unshift(mediCalPlan);
+        plansData.unshift(mediCalPlanSingleton.getPlan());
       }
 
       setPlans(plansData);
@@ -45,7 +35,7 @@ const InsuranceQuoteFetcher = ({
         if (plansData.find((plan) => plan.id === p.id)) acc.push(p);
         return acc;
       }, []);
-      
+      //reduce()
       setSelectedPlans(filteredSelected);
 
       setLoading(false);
@@ -84,6 +74,7 @@ const InsuranceQuoteFetcher = ({
           plan.id === updatedPlan.id ? updatedPlan : plan,
         ),
       );
+      // map
       alert(result.message);
     } else {
       alert("Failed to update the insurance plan");

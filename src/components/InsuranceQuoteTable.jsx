@@ -1,5 +1,5 @@
-import { useState } from "react";
-import { premiumCalculator } from "../utils/premiumCalculator";
+import React, { useState } from "react";
+import { createCalculatedPlan } from "../utils/PlanFactory";
 import "../stylesheets/InsuranceQuoteTable.css";
 
 const InsuranceQuoteTable = ({
@@ -24,7 +24,7 @@ const InsuranceQuoteTable = ({
             <th>Select</th>
             <th>Insurer</th>
             <th>Tier</th>
-            <th>Original Premium($)</th>
+            <th>Original Premium ($)</th>
             <th>Base Premium ($)</th>
             <th>Discount ($)</th>
             <th>Final Premium ($)</th>
@@ -33,19 +33,10 @@ const InsuranceQuoteTable = ({
         </thead>
         <tbody>
           {plans.map((plan) => {
-            const { basePremium, discount, finalPremium, originalPremium } =
-              premiumCalculator({ plan, userIncome, userAge });
+            const calculatedPlan = createCalculatedPlan(plan, userIncome, userAge);
 
             const isSelected = selectedPlans.some((p) => p.id === plan.id);
             const isMediCal = plan.special;
-
-            const calculatedPlan = {
-              ...plan,
-              originalPremium,
-              basePremium,
-              discount,
-              finalPremium,
-            };
 
             return (
               <tr
@@ -61,13 +52,11 @@ const InsuranceQuoteTable = ({
                     onChange={() => {
                       if (isSelected) {
                         setSelectedPlans((prev) =>
-                          prev.filter((p) => p.id !== plan.id),
+                          prev.filter((p) => p.id !== plan.id)
                         );
                       } else {
                         if (selectedPlans.length >= 2) {
-                          alert(
-                            "You can only compare up to two insurance plans.",
-                          );
+                          alert("You can only compare up to two insurance plans.");
                           return;
                         }
                         setSelectedPlans((prev) => [...prev, calculatedPlan]);
@@ -78,16 +67,16 @@ const InsuranceQuoteTable = ({
                 <td className={isMediCal ? "medi-cal" : ""}>{plan.insurer}</td>
                 <td className={isMediCal ? "medi-cal" : ""}>{plan.tier}</td>
                 <td className={isMediCal ? "medi-cal" : ""}>
-                  ${originalPremium.toFixed(2)}
+                  ${calculatedPlan.originalPremium.toFixed(2)}
                 </td>
                 <td className={isMediCal ? "medi-cal" : ""}>
-                  ${basePremium.toFixed(2)}
+                  ${calculatedPlan.basePremium.toFixed(2)}
                 </td>
                 <td className={isMediCal ? "medi-cal" : ""}>
-                  ${discount.toFixed(2)}
+                  ${calculatedPlan.discount.toFixed(2)}
                 </td>
                 <td className={isMediCal ? "medi-cal" : ""}>
-                  <strong>${finalPremium.toFixed(2)}</strong>
+                  <strong>${calculatedPlan.finalPremium.toFixed(2)}</strong>
                 </td>
                 <td>
                   {!plan.special && (
@@ -112,17 +101,13 @@ const InsuranceQuoteTable = ({
           })}
         </tbody>
       </table>
-
       {editingPlan && (
         <div className="modal show d-block">
           <div className="modal-dialog">
             <div className="modal-content">
               <div className="modal-header">
                 <h5 className="modal-title">Edit Insurance Plan</h5>
-                <button
-                  className="btn-close"
-                  onClick={() => setEditingPlan(null)}
-                ></button>
+                <button className="btn-close" onClick={() => setEditingPlan(null)}></button>
               </div>
               <div className="modal-body">
                 <label>Base Premium ($)</label>
@@ -140,10 +125,7 @@ const InsuranceQuoteTable = ({
                 />
               </div>
               <div className="modal-footer">
-                <button
-                  className="btn btn-secondary"
-                  onClick={() => setEditingPlan(null)}
-                >
+                <button className="btn btn-secondary" onClick={() => setEditingPlan(null)}>
                   Cancel
                 </button>
                 <button

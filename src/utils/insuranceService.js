@@ -7,7 +7,7 @@ import {
   deleteDoc,
 } from "firebase/firestore";
 
-export const fetchInsurancePlans = async () => {
+const fetchInsurancePlans = async () => {
   try {
     const querySnapshot = await getDocs(collection(db, "insurance_corp"));
     return querySnapshot.docs.map((doc) => ({
@@ -22,7 +22,7 @@ export const fetchInsurancePlans = async () => {
   }
 };
 
-export const deleteInsurancePlan = async (planId) => {
+const deleteInsurancePlan = async (planId) => {
   try {
     await deleteDoc(doc(db, "insurance_corp", planId));
     return { success: true, message: "Insurance plan deleted successfully" };
@@ -32,7 +32,7 @@ export const deleteInsurancePlan = async (planId) => {
   }
 };
 
-export const updateInsurancePlan = async (updatedPlan) => {
+const updateInsurancePlan = async (updatedPlan) => {
   try {
     const planRef = doc(db, "insurance_corp", updatedPlan.id);
     const formattedPlan = {
@@ -47,3 +47,4 @@ export const updateInsurancePlan = async (updatedPlan) => {
     return { success: false, message: error.message };
   }
 };
+export { fetchInsurancePlans, deleteInsurancePlan, updateInsurancePlan };

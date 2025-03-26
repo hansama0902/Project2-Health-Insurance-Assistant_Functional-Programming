@@ -191,6 +191,155 @@ for (let i = 0; i < selectedPlans.length; i++) {
 
 ---
 
+## Design Patterns Used in the Insurance Application
+
+This section highlights how three core design patterns—**Singleton**, **Factory**, and **Module**—are effectively applied in the insurance application codebase. For each pattern, we provide:
+
+---
+
+### 1. Singleton Pattern
+
+**Correct Usage (your code):**
+
+```js
+// utils/MediCalPlanSingleton.js
+const mediCalPlanSingleton = (() => {
+  const plan = {
+    id: "medi-cal",
+    insurer: "Medi-Cal",
+    tier: "Special",
+    base_premium: 0,
+    discount: 0,
+    finalPremium: 0,
+    coverage_deductible: 0,
+    hospital_coverage: "All Hospitals",
+    special: true,
+  };
+
+  return {
+    getPlan: () => plan,
+  };
+})();
+```
+
+This ensures only **one Medi-Cal plan** exists in memory and is reused throughout the app.
+**Why it's good FP:**
+
+- Avoids side effects: the same data is reused and not recreated.
+- Ensures referential transparency—calling `getPlan()` always returns the same object.
+- Makes the code predictable and testable.
+
+
+**Hypothetical Broken Example:**
+
+```js
+function getLogger() {
+  return { log: (msg) => console.log(msg) };
+}
+```
+---
+
+### 2. Factory Pattern
+
+**Correct Usage (your code):**
+
+```js
+import { premiumCalculator } from "./premiumCalculator";
+
+function createCalculatedPlan(plan, userIncome, userAge) {
+  const { basePremium, discount, finalPremium, originalPremium } = premiumCalculator({
+    plan,
+    userIncome,
+    userAge,
+  });
+
+  return {
+    ...plan,
+    originalPremium,
+    basePremium,
+    discount,
+    finalPremium,
+  };
+}
+export { createCalculatedPlan };
+```
+**Why it's good FP:**
+
+- Factory functions are pure: same input → same output.
+- Avoids code repetition and encourages immutability by creating new objects.
+- Easy to reuse and test.
+
+
+**Hypothetical Broken Example:**
+
+```js
+const car1 = { make: "Honda", wheels: 4 };
+const car2 = { make: "Toyota", wheels: 4 };
+```
+
+---
+
+### 3. Module Pattern
+
+**Correct Usage (your code):**
+
+```js
+import { useState } from "react";
+import {
+  deleteInsurancePlan,
+  updateInsurancePlan,
+} from "../utils/insuranceService";
+
+const useInsuranceManager = () => {
+  const [selectedPlans, setSelectedPlans] = useState([]);
+
+  const handleSelectPlan = (plan) => {
+    setSelectedPlans((prev) => {
+      if (prev.some((p) => p.id === plan.id)) {
+        return prev.filter((p) => p.id !== plan.id);
+      } else if (prev.length < 2) {
+        return [...prev, plan];
+      } else {
+        return prev;
+      }
+    });
+  };
+
+  const handleDeletePlan = async (planId) => {
+    const result = await deleteInsurancePlan(planId);
+    alert(result.message);
+  };
+
+  const handleEditPlan = async (updatedPlan) => {
+    const result = await updateInsurancePlan(updatedPlan);
+    alert(result.message);
+  };
+
+  return {
+    selectedPlans,
+    setSelectedPlans,
+    handleSelectPlan,
+    handleDeletePlan,
+    handleEditPlan,
+  };
+};
+
+export default useInsuranceManager;
+```
+**Why it's good FP:**
+
+- Promotes separation of concerns: each function has a single responsibility.
+- Functions are grouped logically and do not rely on global state.
+- Enables composition and clear data flow across modules.
+
+**Hypothetical Broken Example:**
+
+```js
+window.saveToDisk = () => {};
+window.readFromDisk = () => {};
+```
+---
+
 ## License
 
 This project is licensed under the **MIT License**.

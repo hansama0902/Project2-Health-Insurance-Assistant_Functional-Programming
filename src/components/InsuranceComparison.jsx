@@ -1,4 +1,4 @@
-const InsuranceComparison = ({ selectedPlans }) => {
+const InsuranceComparison = ({ selectedPlans, onExitComparison}) => {
   return (
     <div>
       <h2>Comparison Details</h2>
@@ -51,7 +51,7 @@ const InsuranceComparison = ({ selectedPlans }) => {
       </div>
       <button
         className="btn btn-danger mb-3"
-        onClick={() => window.location.reload()}
+        onClick={onExitComparison}
       >
         Exit Comparison
       </button>

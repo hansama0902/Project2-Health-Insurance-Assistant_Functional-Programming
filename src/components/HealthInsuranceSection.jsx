@@ -1,4 +1,4 @@
-import React from "react";
+// HealthInsuranceSection.jsx
 import UserInputForm from "./UserInputForm";
 import InsuranceQuoteFetcher from "./InsuranceQuoteFetcher";
 import InsuranceComparison from "./InsuranceComparison";
@@ -7,6 +7,7 @@ const HealthInsuranceSection = ({
   filters,
   setFilters,
   compareMode,
+  disableCompareMode, 
   selectedPlans,
   setSelectedPlans,
   onDeletePlan,
@@ -22,7 +23,10 @@ const HealthInsuranceSection = ({
 
       <div className="mt-4">
         {compareMode ? (
-          <InsuranceComparison selectedPlans={selectedPlans} />
+          <InsuranceComparison
+            selectedPlans={selectedPlans}
+            onExitComparison={disableCompareMode}
+          />
         ) : (
           filters && (
             <InsuranceQuoteFetcher

@@ -18,7 +18,8 @@ const App = () => {
     handleEditPlan,
   } = useInsuranceManager();
 
-  const { compareMode, enableCompareMode } = useCompareMode();
+
+  const { compareMode, enableCompareMode, disableCompareMode } = useCompareMode();
 
   return (
     <>
@@ -32,6 +33,8 @@ const App = () => {
         filters={filters}
         setFilters={setFilters}
         compareMode={compareMode}
+
+        disableCompareMode={disableCompareMode}
         selectedPlans={selectedPlans}
         onSelectPlan={handleSelectPlan}
         setSelectedPlans={setSelectedPlans}
