@@ -3,7 +3,18 @@
 **Health Insurance Assistant** is a user-friendly application designed to help California residents quickly access personalized health insurance plans and quotes. Users can input their age, annual income, and insurance preferences to view available health insurance options from Covered California partner insurers, such as Anthem Blue Cross and Kaiser Permanente. The application clearly indicates eligibility for special discounted insurance options, providing transparent and detailed plan comparisons to assist users in making informed decisions. By highlighting special discounts for eligible users, the Health Insurance Assistant simplifies the process of selecting the best insurance coverage, making it efficient and accessible for everyone.
 
 ---
+## Author
 
+**Shuhan Dong**
+
+---
+
+## Class Link
+
+CS 5010 Program Design Paradigms  
+Instructor: John Alexis Guerra Gómez [Profile](https://johnguerra.co/)
+
+---
 ## Key Features
 
 - **Personalized Plan Recommendations:** Provides tailored insurance plan suggestions based on the user's age, income, and preferences.
@@ -115,9 +126,9 @@ Used ChatGPT (GPT-4) to assist with the following functional programming and pro
 
 - **Video Demonstration:** [Link]
 
-- **UML Diagram:** [Link]
+- **UML Diagram:** [Link](https://lucid.app/lucidchart/62c26d22-6be1-4acb-ba23-cebe6418b7af/edit?viewport_loc=-1646%2C-1252%2C4571%2C3563%2C0_0&invitationId=inv_86c2605e-a900-4f64-b60d-4522e29f4ac1))
 
-- **Figma Design:** [Link]
+- **Figma Design:** [Link](https://www.figma.com/design/ksccS9X5VI09JCaygX1w7I/Interface-Mockups?node-id=0-1&m=dev&t=CwdkuD8Z3wasC26g-1)
 
 - **Business Requirements Document:** [Link](https://github.com/hansama0902/Project2-Health-Insurance-Assistant_Functional-Programming/blob/main/Business%20Requirements/Insure-Clear%20Saver%20Business%20Requirements.pdf)
 
