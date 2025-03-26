@@ -1,4 +1,4 @@
-# Demonstrate the application of functional programming
+# Demonstrate the Application of Functional Programming
 
 ## Functional Programming Principles Applied in the Project
 
