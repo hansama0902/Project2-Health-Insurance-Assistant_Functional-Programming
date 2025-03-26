@@ -3,7 +3,7 @@
 ## Functional Programming Principles Applied in the Project
 
 This section demonstrates how the five core principles of Functional Programming (FP) are applied in the insurance application project. For each principle, we provide:
-
+### 1. Pure functions
 **Code Example:**
 
 ```js
