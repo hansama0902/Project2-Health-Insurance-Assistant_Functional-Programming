@@ -81,13 +81,13 @@ Then, visit `http://localhost:5173` in your browser.
 
 This section is part of a larger design and reflection document. It focuses on how functional programming methods are applied using array functions in the InsuranceQuoteFetcher component.
 
-Three core array methods are highlighted here: filter, map, and reduce. For each method, we explain its use in the code, why it is a good application of functional programming (FP), and give a hypothetical non-code example that would break or violate the concept.
+Three core array methods are highlighted here: filter, map, and reduce. For each method, we explain its use in the code, why it is a good application of functional programming (FP), and include a hypothetical imperative-style code example that would break or violate FP principles.
 
 ---
 
 ### 1. Using filter to narrow down plans by tier
 
-#### Code Example
+#### Functional Code Example
 
 ```javascript
 if (filters?.tier && filters.tier !== "All Options") {
@@ -97,21 +97,31 @@ if (filters?.tier && filters.tier !== "All Options") {
 
 #### Why this is a good FP practice
 
-- This usage is declarative and clear. It focuses on what we want (filtered plans), not how to loop through them.
-- It returns a new array without mutating the original data.
-- Functional code like this reduces room for errors and improves readability.
+- It is declarative and clearly expresses the intent: return only matching plans.
+- It avoids side effects and does not mutate the original array.
+- Easier to read, maintain, and test.
 
-#### Hypothetical non-code example
+#### Hypothetical Imperative Example
 
-Imagine you are selecting apples at a grocery store. If you grab every apple and inspect each one by opening it up, then try to tape them back and put some in a basket, the process becomes messy and error-prone.
+```javascript
+let index = 0;
+while (index < plansData.length) {
+  if (plansData[index].tier !== filters.tier) {
+    plansData.splice(index, 1); // Mutates array during iteration
+  } else {
+    index++;
+  }
+}
+```
 
-Instead, using a filter approach is like checking the labels and selecting only the "organic" ones from the shelf without damaging the rest. You keep the selection clean and avoid side effects.
+- Mutating the array while iterating can lead to skipped items or logic errors.
+- This code is harder to follow and maintain.
 
 ---
 
 ### 2. Using map to update a specific plan
 
-#### Code Example
+#### Functional Code Example
 
 ```javascript
 setPlans((prevPlans) =>
@@ -123,19 +133,29 @@ setPlans((prevPlans) =>
 
 #### Why this is a good FP practice
 
-- map creates a new array without changing the original one, preserving immutability.
-- This aligns perfectly with React's principle of state updates being pure and predictable.
-- It’s easy to understand and scale.
+- Creates a new array rather than modifying the existing one.
+- Supports immutability, which is critical in React state updates.
+- Cleaner and more predictable than manual mutations.
 
-#### Hypothetical non-code example
+#### Hypothetical Imperative Example
 
-Imagine a classroom of students. One student changes their name. Instead of changing the name tag on each desk one by one, you go through a printed list and only change the entry for the student who updated their info, then reprint the list. That’s what map does: it builds a new version without changing the original data directly.
+```javascript
+for (let i = 0; i < plans.length; i++) {
+  if (plans[i].id === updatedPlan.id) {
+    plans[i] = updatedPlan; // Direct mutation of array element
+  }
+}
+setPlans(plans); // May lead to bugs due to shared references
+```
+
+- Modifies the existing array directly.
+- Can result in React not detecting state changes properly.
 
 ---
 
 ### 3. Using reduce to synchronize selected plans
 
-#### Code Example
+#### Functional Code Example
 
 ```javascript
 const filteredSelected = selectedPlans.reduce((acc, p) => {
@@ -146,13 +166,30 @@ const filteredSelected = selectedPlans.reduce((acc, p) => {
 
 #### Why this is a good FP practice
 
-- reduce is powerful when you want to accumulate or transform data into a new structure.
-- In this case, it checks each selected plan and accumulates only the valid ones.
-- It avoids nested loops or side-effect-based filtering.
+- Performs filtering and accumulation in a single pass.
+- Avoids external state mutation.
+- Works well in cases where chaining filter and map becomes cumbersome.
 
-#### Hypothetical non-code example
+#### Hypothetical Imperative Example
 
-Think of packing for a trip. You have a checklist of items to bring, but not all of them are currently available in your house. Using reduce is like going through your list and adding only the items that you actually find in your house to the suitcase. You end up with a clean, updated packing list that reflects reality.
+```javascript
+let filteredSelected = [];
+for (let i = 0; i < selectedPlans.length; i++) {
+  let match = false;
+  for (let j = 0; j < plansData.length; j++) {
+    if (selectedPlans[i].id === plansData[j].id) {
+      match = true;
+      break;
+    }
+  }
+  if (match) {
+    filteredSelected.push(selectedPlans[i]);
+  }
+}
+```
+
+- Nested loops make the logic more complex and harder to debug.
+- Increases time complexity and risk of side effects.
 
 ---
 
