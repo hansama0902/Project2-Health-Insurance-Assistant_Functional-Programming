@@ -74,6 +74,11 @@ Then, visit `http://localhost:5173` in your browser.
 
 - **`InsuranceComparison`:** Allows users to compare selected insurance plans side-by-side for informed decision-making.
 
+- **`InsuranceQuoteTable`:** Displays all matching insurance plans in a sortable, selectable table view. Allows users to edit or delete individual plans and select up to two plans for comparison.
+
+- **`AddInsuranceModal`:** Provides a form interface in a modal popup that lets users (admin or demo users) add a new insurance plan to the Firestore database.
+- **`Navbar`:** Offers navigation-level controls including “Add Insurance” and “Compare Plans”, and displays dynamic UI feedback based on user selection count.
+
 ---
 
 ### Database Schema
