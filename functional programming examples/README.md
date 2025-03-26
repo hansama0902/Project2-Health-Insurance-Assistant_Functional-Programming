@@ -152,7 +152,7 @@ for (let i = 0; i < plans.length; i++) {
 const filteredPlans = plans.filter((p) => p.tier === filters.tier);
 ```
 
-**💡 Why it’s good FP:**
+**Why it’s good FP:**
 
 - You declare what you want: “plans with this tier”.
 - No loops, no index manipulation → concise and expressive.
