@@ -7,7 +7,7 @@ const HealthInsuranceSection = ({
   filters,
   setFilters,
   compareMode,
-  disableCompareMode, 
+  disableCompareMode,
   selectedPlans,
   setSelectedPlans,
   onDeletePlan,

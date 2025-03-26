@@ -2,11 +2,12 @@
 import { premiumCalculator } from "./premiumCalculator";
 
 function createCalculatedPlan(plan, userIncome, userAge) {
-  const { basePremium, discount, finalPremium, originalPremium } = premiumCalculator({
-    plan,
-    userIncome,
-    userAge,
-  });
+  const { basePremium, discount, finalPremium, originalPremium } =
+    premiumCalculator({
+      plan,
+      userIncome,
+      userAge,
+    });
 
   return {
     ...plan,

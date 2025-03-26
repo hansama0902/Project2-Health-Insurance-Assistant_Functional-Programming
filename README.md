@@ -77,9 +77,182 @@ Then, visit `http://localhost:5173` in your browser.
 
 ---
 
+## Functional Programming Principles Applied in the Project
+
+This section demonstrates how the five core principles of Functional Programming (FP) are applied in the insurance application project. For each principle, we provide:
+
+**Code Example:**
+
+```js
+// utils/premiumCalculator.js
+const premiumCalculator = ({ plan, userIncome, userAge }) => {
+  let discount = 0;
+  let basePremium = Number(plan.base_premium) || 0;
+  let originalPremium = basePremium;
+
+  if (userAge > 35 && userAge <= 55) {
+    basePremium *= 2;
+  } else if (userAge > 55) {
+    basePremium *= 3;
+  }
+
+  if (userIncome < 35000) {
+    discount = basePremium * 0.2;
+  } else if (userIncome < 50000) {
+    discount = basePremium * 0.1;
+  }
+
+  const finalPremium = basePremium - discount;
+
+  return { basePremium, discount, finalPremium, originalPremium };
+};
+```
+
+**Why it’s good FP:**
+
+- No side effects, no state mutation, and output depends only on input.
+- Reusable, testable, and predictable.
+
+**Counterexample (hypothetical):**
+
+```js
+let log = [];
+function impureCalc(x) {
+  log.push(x);
+  return x * 2;
+}
+```
+
+**Why it breaks FP:**
+
+- It modifies an external variable (`log`) → side effect.
+- Cannot guarantee same result with same input.
+
+---
+
+### 2. Immutability
+
+**Code Example:**
+
+```js
+const updatedPlans = plans.filter((plan) => plan.id !== planId);
+setPlans(updatedPlans);
+```
+
+**Why it’s good FP:**
+
+- It does not mutate the original `plans` array.
+- `filter()` returns a new array → immutable data handling.
+
+**Counterexample (hypothetical):**
+
+```js
+plans.splice(0, 1);
+```
+
+**Why it breaks FP:**
+
+- Mutates the original array directly.
+- Can cause unexpected side effects in other parts of the code using `plans`.
+
+---
+
+### 3. First-class Functions
+
+**Code Example:**
+
+```js
+const handleDeletePlan = async (planId) => {
+  const result = await deleteInsurancePlan(planId);
+  if (result.success) {
+    ...
+  }
+};
+```
+
+**Why it’s good FP:**
+
+- Functions are treated as values: stored in variables, passed as props, used as arguments.
+
+**Counterexample (hypothetical):**
+
+```js
+if (condition) {
+  eval("function hidden() { return 42 }");
+}
+```
+
+**Why it breaks FP:**
+
+- Dynamically defines a function in an unsafe, non-reusable way.
+- Hard to pass around or reuse.
+
+---
+
+### 4. Higher-order Functions
+
+**Code Example:**
+
+```js
+plans.map((plan) => {
+  const calculatedPlan = createCalculatedPlan(plan, userIncome, userAge);
+  ...
+});
+```
+
+**Why it’s good FP:**
+
+- `map()` takes a function as an argument → classic higher-order function.
+- Promotes abstraction and clean iteration logic.
+
+**Counterexample (hypothetical):**
+
+```js
+let results = [];
+for (let i = 0; i < plans.length; i++) {
+  results.push(plans[i] * 2);
+}
+```
+
+**Why it breaks FP:**
+
+- Uses imperative loop instead of function abstraction.
+- Harder to compose and reuse logic.
+
+---
+
+### 5. Declarative over Imperative
+
+**Code Example:**
+
+```js
+const filteredPlans = plans.filter((p) => p.tier === filters.tier);
+```
+
+**💡 Why it’s good FP:**
+
+- You declare what you want: “plans with this tier”.
+- No loops, no index manipulation → concise and expressive.
+
+**Counterexample (hypothetical):**
+
+```js
+const filtered = [];
+for (let i = 0; i < plans.length; i++) {
+  if (plans[i].tier === "Gold") filtered.push(plans[i]);
+}
+```
+
+**Why it breaks FP:**
+
+- Focuses on how to perform the filtering (imperative), rather than what outcome is needed (declarative).
+- More error-prone and verbose.
+
+---
+
 ## Functional Programming Examples（filter, map, and reduce）
 
-Three core array methods are highlighted here: filter, map, and reduce.  
+Three core array methods are highlighted here: filter, map, and reduce.
 
 ---
 
@@ -123,9 +296,7 @@ while (index < plansData.length) {
 
 ```javascript
 setPlans((prevPlans) =>
-  prevPlans.map((plan) =>
-    plan.id === updatedPlan.id ? updatedPlan : plan
-  )
+  prevPlans.map((plan) => (plan.id === updatedPlan.id ? updatedPlan : plan)),
 );
 ```
 
@@ -227,7 +398,6 @@ This ensures only **one Medi-Cal plan** exists in memory and is reused throughou
 - Ensures referential transparency—calling `getPlan()` always returns the same object.
 - Makes the code predictable and testable.
 
-
 **Hypothetical Broken Example:**
 
 ```js
@@ -235,24 +405,27 @@ function getLogger() {
   return { log: (msg) => console.log(msg) };
 }
 ```
+
 **Why it’s a broken Singleton:**
+
 - Every call to getLogger() creates a new object, so logger1 !== logger2.
 - Singleton requires a single shared instance across the entire application.
 - This breaks consistency and can lead to duplicated state, inefficient memory usage, and hard-to-track bugs in shared logic.
 
 ---
 
-### 2. Factory Pattern  
+### 2. Factory Pattern
 
 ```js
 import { premiumCalculator } from "./premiumCalculator";
 
 function createCalculatedPlan(plan, userIncome, userAge) {
-  const { basePremium, discount, finalPremium, originalPremium } = premiumCalculator({
-    plan,
-    userIncome,
-    userAge,
-  });
+  const { basePremium, discount, finalPremium, originalPremium } =
+    premiumCalculator({
+      plan,
+      userIncome,
+      userAge,
+    });
 
   return {
     ...plan,
@@ -266,21 +439,21 @@ export { createCalculatedPlan };
 ```
 
 ```js
- {
-    plans.map((plan) => {
-            const calculatedPlan = createCalculatedPlan(plan, userIncome, userAge);
+{
+  plans.map((plan) => {
+    const calculatedPlan = createCalculatedPlan(plan, userIncome, userAge);
 
-            const isSelected = selectedPlans.some((p) => p.id === plan.id);
-            const isMediCal = plan.special;
- })
- }
+    const isSelected = selectedPlans.some((p) => p.id === plan.id);
+    const isMediCal = plan.special;
+  });
+}
 ```
+
 **Why it's good FP:**
 
 - Factory functions are pure: same input → same output.
 - Avoids code repetition and encourages immutability by creating new objects.
 - Easy to reuse and test.
-
 
 **Hypothetical Broken Example:**
 
@@ -289,15 +462,15 @@ const car1 = { make: "Honda", wheels: 4 };
 const car2 = { make: "Toyota", wheels: 4 };
 ```
 
-**Why it’s a broken Factory:**  
+**Why it’s a broken Factory:**
 
- - The object creation logic is manual and duplicated.
- - There’s no centralized logic to enforce structure or defaults, leading to inconsistency and repetitive code.
- - Factory pattern helps ensure all objects of the same type are created in a uniform and reusable way — which this example lacks.
+- The object creation logic is manual and duplicated.
+- There’s no centralized logic to enforce structure or defaults, leading to inconsistency and repetitive code.
+- Factory pattern helps ensure all objects of the same type are created in a uniform and reusable way — which this example lacks.
 
 ---
 
-### 3. Module Pattern  
+### 3. Module Pattern
 
 ```js
 import { useState } from "react";
@@ -342,6 +515,7 @@ const useInsuranceManager = () => {
 
 export default useInsuranceManager;
 ```
+
 **Why it's good FP:**
 
 - Promotes separation of concerns: each function has a single responsibility.
@@ -354,9 +528,11 @@ export default useInsuranceManager;
 window.saveToDisk = () => {};
 window.readFromDisk = () => {};
 ```
+
 ---
 
 **Why it’s a broken Module:**
+
 - All functions are attached to the global scope, increasing the risk of name collisions and unintentional overwrites.
 - Module pattern promotes encapsulation, scoped variables, and explicit exports, none of which are present here.
 - This approach makes testing, reuse, and maintenance harder, especially as the codebase grows.

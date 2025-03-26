@@ -1,4 +1,4 @@
-const InsuranceComparison = ({ selectedPlans, onExitComparison}) => {
+const InsuranceComparison = ({ selectedPlans, onExitComparison }) => {
   return (
     <div>
       <h2>Comparison Details</h2>
@@ -49,10 +49,7 @@ const InsuranceComparison = ({ selectedPlans, onExitComparison}) => {
           </tbody>
         </table>
       </div>
-      <button
-        className="btn btn-danger mb-3"
-        onClick={onExitComparison}
-      >
+      <button className="btn btn-danger mb-3" onClick={onExitComparison}>
         Exit Comparison
       </button>
     </div>

@@ -33,7 +33,11 @@ const InsuranceQuoteTable = ({
         </thead>
         <tbody>
           {plans.map((plan) => {
-            const calculatedPlan = createCalculatedPlan(plan, userIncome, userAge);
+            const calculatedPlan = createCalculatedPlan(
+              plan,
+              userIncome,
+              userAge,
+            );
 
             const isSelected = selectedPlans.some((p) => p.id === plan.id);
             const isMediCal = plan.special;
@@ -52,11 +56,13 @@ const InsuranceQuoteTable = ({
                     onChange={() => {
                       if (isSelected) {
                         setSelectedPlans((prev) =>
-                          prev.filter((p) => p.id !== plan.id)
+                          prev.filter((p) => p.id !== plan.id),
                         );
                       } else {
                         if (selectedPlans.length >= 2) {
-                          alert("You can only compare up to two insurance plans.");
+                          alert(
+                            "You can only compare up to two insurance plans.",
+                          );
                           return;
                         }
                         setSelectedPlans((prev) => [...prev, calculatedPlan]);
@@ -107,7 +113,10 @@ const InsuranceQuoteTable = ({
             <div className="modal-content">
               <div className="modal-header">
                 <h5 className="modal-title">Edit Insurance Plan</h5>
-                <button className="btn-close" onClick={() => setEditingPlan(null)}></button>
+                <button
+                  className="btn-close"
+                  onClick={() => setEditingPlan(null)}
+                ></button>
               </div>
               <div className="modal-body">
                 <label>Base Premium ($)</label>
@@ -125,7 +134,10 @@ const InsuranceQuoteTable = ({
                 />
               </div>
               <div className="modal-footer">
-                <button className="btn btn-secondary" onClick={() => setEditingPlan(null)}>
+                <button
+                  className="btn btn-secondary"
+                  onClick={() => setEditingPlan(null)}
+                >
                   Cancel
                 </button>
                 <button
