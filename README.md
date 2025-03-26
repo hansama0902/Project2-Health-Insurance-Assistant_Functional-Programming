@@ -136,7 +136,8 @@ Used ChatGPT (GPT-4) to assist with the following functional programming and pro
 - **Deployed:** [Link](https://health-insurance-assistant.web.app)
 - **Demonstrate the Application of Functional Programming:** [Link](https://github.com/hansama0902/Project2-Health-Insurance-Assistant_Functional-Programming/blob/main/functional%20programming%20examples/README.md)
 
-- **Video Demonstration:** [Link]
+- **Video Demonstration:** [Link](https://youtu.be/njTlqhDHHV0)
+- **Video FP Examples:** [Link](https://youtu.be/QYfop67IQfs)
 
 - **UML Diagram:** [Link](https://lucid.app/lucidchart/62c26d22-6be1-4acb-ba23-cebe6418b7af/edit?viewport_loc=-1646%2C-1252%2C4571%2C3563%2C0_0&invitationId=inv_86c2605e-a900-4f64-b60d-4522e29f4ac1))
 
